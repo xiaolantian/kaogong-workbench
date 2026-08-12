@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'ZCOOL KuaiLe', 'Fredoka', sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
