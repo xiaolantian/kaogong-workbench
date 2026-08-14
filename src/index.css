@@ -478,29 +478,29 @@ input[type='number'] {
    配色：深夜空靛紫 → 星云紫 → 玫红粉 → 金色星光，层次分明、协调统一
    ───────────────────────────────────────────── */
 #root.theme-galaxy {
-  --bg-1: #07001a;
-  --bg-2: #1a0533;
-  --bg-3: #3b0764;
+  --bg-1: #0a001f;
+  --bg-2: #1f0440;
+  --bg-3: #4a0e6e;
   --wallpaper-url: none;
-  --card-bg: #2a0838;
-  --card-alt: #3d0a52;
+  --card-bg: #2c0640;
+  --card-alt: #440d5c;
   --accent: #f0abfc;
-  --accent-soft: rgba(240, 171, 252, 0.20);
+  --accent-soft: rgba(240, 171, 252, 0.22);
   --accent-2: #fbbf24;
   --text-primary: #faf5ff;
-  --text-secondary: #c4b5fd;
+  --text-secondary: #d8b4fe;
   --border: #f0abfc;
-  --border-soft: #5b21b6;
-  --shadow-color: rgba(240, 171, 252, 0.22);
+  --border-soft: #6b21a8;
+  --shadow-color: rgba(240, 171, 252, 0.28);
   --shadow-harsh: #fbbf24;
-  --input-bg: #2a0838;
-  --disabled-text: #7c3aed;
-  --disabled-border: #5b21b6;
+  --input-bg: #2c0640;
+  --disabled-text: #9333ea;
+  --disabled-border: #6b21a8;
   --ring-track: #3b0764;
-  --glass-bg: rgba(42, 8, 56, 0.75);
-  --glass-border: rgba(240, 171, 252, 0.30);
-  --scrollbar-thumb: rgba(240, 171, 252, 0.38);
-  --scrollbar-hover: rgba(240, 171, 252, 0.68);
+  --glass-bg: rgba(44, 6, 64, 0.78);
+  --glass-border: rgba(240, 171, 252, 0.35);
+  --scrollbar-thumb: rgba(240, 171, 252, 0.42);
+  --scrollbar-hover: rgba(240, 171, 252, 0.72);
 
   --pattern-overlay:
     radial-gradient(ellipse 480px 320px at 18% 22%, rgba(240,71,140,0.22) 0%, transparent 68%),
@@ -510,19 +510,19 @@ input[type='number'] {
     radial-gradient(ellipse 180px 160px at 20% 80%, rgba(251,191,36,0.10) 0%, transparent 75%),
     radial-gradient(ellipse 140px 120px at 55% 88%, rgba(192,132,252,0.14) 0%, transparent 78%);
 
-  --aside-bg: rgba(7, 0, 26, 0.94);
-  --aside-border: rgba(240, 171, 252, 0.22);
+  --aside-bg: rgba(10, 0, 31, 0.94);
+  --aside-border: rgba(240, 171, 252, 0.25);
   --aside-shadow: rgba(0, 0, 0, 0.5);
-  --inactive-text: #7c3aed;
+  --inactive-text: #9333ea;
   --cat-1: #f0abfc;
-  --cat-1-soft: #3b0764;
+  --cat-1-soft: #4a0e6e;
   --cat-2: #fbbf24;
-  --cat-2-soft: #4c1d95;
+  --cat-2-soft: #5c1a9e;
   --cat-3: #ec4899;
-  --cat-3-soft: #5b1a8e;
-  --col-tint-1: #3b0764;
-  --col-tint-2: #4c1d95;
-  --col-tint-3: #5b1a8e;
+  --cat-3-soft: #6b1aa8;
+  --col-tint-1: #4a0e6e;
+  --col-tint-2: #5c1a9e;
+  --col-tint-3: #6b1aa8;
 }
 
 /* 星河主题专属：深邃底色 + 多层星云渐变 */
@@ -540,6 +540,16 @@ input[type='number'] {
 }
 
 /* 星河主题专属：流星层由 GalaxyBackground 组件渲染 */
+
+/* 非星河主题：显式清除动画与混合模式，防止星河主题残留 */
+#root.theme-day::before,
+#root.theme-night::before,
+#root.theme-sakura::before,
+#root.theme-forest::before,
+#root.theme-ocean::before {
+  animation: none;
+  mix-blend-mode: normal;
+}
 
 @keyframes galaxy-nebula-drift {
   0% {
@@ -710,26 +720,34 @@ input[type='number'] {
   100% { opacity: 0;   transform: scale(0.7); }
 }
 
-/* 星河主题专属：卡片 — 玫红描边 + 金色硬阴影，与黑夜主题明显区分 */
+/* 星河主题专属：卡片 — 玫红描边 + 金色硬阴影 + 粉色霓虹辉光，与黑夜主题明显区分 */
 #root.theme-galaxy .soft-card {
   border-color: #f0abfc;
+  background:
+    radial-gradient(ellipse 200% 120% at 30% 0%, rgba(240,71,140,0.06) 0%, transparent 60%),
+    var(--card-bg);
   box-shadow:
     4px 4px 0 #fbbf24,
-    0 0 24px rgba(240, 171, 252, 0.15),
-    0 0 60px rgba(251, 191, 36, 0.06);
+    0 0 20px rgba(240, 171, 252, 0.20),
+    0 0 60px rgba(251, 191, 36, 0.08),
+    inset 0 1px 0 rgba(240, 171, 252, 0.10);
 }
 #root.theme-galaxy .soft-card:hover {
   box-shadow:
     6px 6px 0 #fbbf24,
-    0 0 32px rgba(240, 171, 252, 0.22),
-    0 0 80px rgba(251, 191, 36, 0.10);
+    0 0 32px rgba(240, 171, 252, 0.30),
+    0 0 80px rgba(251, 191, 36, 0.12),
+    inset 0 1px 0 rgba(240, 171, 252, 0.15);
 }
 #root.theme-galaxy .neo-btn {
   border-color: #f0abfc;
-  box-shadow: 4px 4px 0 #fbbf24, 0 0 16px rgba(240, 171, 252, 0.10);
+  background:
+    radial-gradient(ellipse 150% 100% at 50% 0%, rgba(240,71,140,0.08) 0%, transparent 60%),
+    var(--card-bg);
+  box-shadow: 4px 4px 0 #fbbf24, 0 0 16px rgba(240, 171, 252, 0.15);
 }
 #root.theme-galaxy .neo-btn:active {
-  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.08);
+  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.12);
 }
 #root.theme-galaxy .soft-input {
   border-color: #f0abfc;
@@ -737,7 +755,7 @@ input[type='number'] {
   color: #faf5ff;
 }
 #root.theme-galaxy .soft-input:focus {
-  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.18);
+  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.22);
 }
 
 /* 星河主题专属：进度环金色发光 */

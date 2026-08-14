@@ -48,7 +48,7 @@ const THEME_PREVIEW: Record<ThemeId, string> = {
   sakura: 'linear-gradient(135deg, #fff5f7 0%, #ffe8ee 50%, #ffd6e0 100%)',
   forest: 'linear-gradient(135deg, #f8fdfa 0%, #dde9e2 50%, #ecf5ef 100%)',
   ocean: 'linear-gradient(135deg, #07142a 0%, #0a2a5e 50%, #041128 100%)',
-  galaxy: 'linear-gradient(135deg, #0c0a1a 0%, #1a0f3e 50%, #0a0814 100%)',
+  galaxy: 'linear-gradient(135deg, #0a001f 0%, #1f0440 50%, #4a0e6e 100%)',
 }
 
 const ICON_PACKS = [

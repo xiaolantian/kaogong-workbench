@@ -59,13 +59,18 @@ export default function GalaxyBackground() {
   const { activeTheme } = useSettingsStore()
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => { setMounted(true) }, [])
-
-  if (activeTheme !== 'galaxy') return null
+  useEffect(() => {
+    setMounted(false)
+    if (activeTheme === 'galaxy') {
+      setTimeout(() => setMounted(true), 10)
+    }
+  }, [activeTheme])
 
   const stars = useMemo(makeStars, [])
   const nebulae = useMemo(makeNebulaClouds, [])
   const shooters = useMemo(makeShootingStars, [])
+
+  if (activeTheme !== 'galaxy') return null
 
   return (
     <div
