@@ -473,59 +473,276 @@ input[type='number'] {
   --col-tint-3: #e1f5fe;
 }
 
-/* ---------- 星河主题（300 积分 / 传说） ---------- */
+/* ---------- 星河主题（300 积分 / 传说品质） ----------
+   深邃宇宙 + 金色星光 + 粉色星云 + 流星划过，传说级视觉盛宴
+   配色：深夜空靛紫 → 星云紫 → 玫红粉 → 金色星光，层次分明、协调统一
+   ───────────────────────────────────────────── */
 #root.theme-galaxy {
-  --bg-1: #1a0533;
-  --bg-2: #3d1268;
-  --bg-3: #6b21a8;
+  --bg-1: #07001a;
+  --bg-2: #1a0533;
+  --bg-3: #3b0764;
   --wallpaper-url: none;
-  --card-bg: #2d1054;
-  --card-alt: #3d1268;
+  --card-bg: #2a0838;
+  --card-alt: #3d0a52;
   --accent: #f0abfc;
-  --accent-soft: rgba(240, 171, 252, 0.15);
+  --accent-soft: rgba(240, 171, 252, 0.20);
   --accent-2: #fbbf24;
-  --text-primary: #f5f3ff;
+  --text-primary: #faf5ff;
   --text-secondary: #c4b5fd;
   --border: #f0abfc;
-  --border-soft: #6b21a8;
-  --shadow-color: rgba(240, 171, 252, 0.15);
-  --shadow-harsh: #f0abfc;
-  --input-bg: #2d1054;
-  --disabled-text: #a78bfa;
-  --disabled-border: #6b21a8;
-  --ring-track: #4c1d95;
-  --glass-bg: rgba(45, 16, 84, 0.7);
-  --glass-border: rgba(240, 171, 252, 0.3);
-  --scrollbar-thumb: rgba(240, 171, 252, 0.35);
-  --scrollbar-hover: rgba(240, 171, 252, 0.6);
+  --border-soft: #5b21b6;
+  --shadow-color: rgba(240, 171, 252, 0.22);
+  --shadow-harsh: #fbbf24;
+  --input-bg: #2a0838;
+  --disabled-text: #7c3aed;
+  --disabled-border: #5b21b6;
+  --ring-track: #3b0764;
+  --glass-bg: rgba(42, 8, 56, 0.75);
+  --glass-border: rgba(240, 171, 252, 0.30);
+  --scrollbar-thumb: rgba(240, 171, 252, 0.38);
+  --scrollbar-hover: rgba(240, 171, 252, 0.68);
+
   --pattern-overlay:
-    radial-gradient(2px 2px at 12% 18%, #fff 50%, transparent 50%),
-    radial-gradient(1.5px 1.5px at 28% 42%, #fbbf24 50%, transparent 50%),
-    radial-gradient(1px 1px at 45% 12%, #fff 50%, transparent 50%),
-    radial-gradient(2px 2px at 60% 55%, #f0abfc 50%, transparent 50%),
-    radial-gradient(1px 1px at 75% 25%, #fff 50%, transparent 50%),
-    radial-gradient(1.5px 1.5px at 35% 78%, #fbbf24 50%, transparent 50%),
-    radial-gradient(1px 1px at 55% 88%, #fff 50%, transparent 50%),
-    radial-gradient(2px 2px at 8% 65%, #f0abfc 50%, transparent 50%),
-    radial-gradient(1px 1px at 92% 8%, #fff 50%, transparent 50%),
-    radial-gradient(1.5px 1.5px at 65% 38%, #fbbf24 50%, transparent 50%),
-    radial-gradient(1px 1px at 22% 92%, #fff 50%, transparent 50%),
-    radial-gradient(ellipse 300px 200px at 25% 30%, rgba(217,70,239,0.20) 0%, transparent 70%),
-    radial-gradient(ellipse 250px 250px at 75% 70%, rgba(251,191,36,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 180px 200px at 55% 45%, rgba(236,72,153,0.15) 0%, transparent 70%);
-  --aside-bg: rgba(26, 5, 51, 0.92);
-  --aside-border: rgba(240, 171, 252, 0.2);
-  --aside-shadow: rgba(0, 0, 0, 0.4);
-  --inactive-text: #a78bfa;
+    radial-gradient(ellipse 480px 320px at 18% 22%, rgba(240,71,140,0.22) 0%, transparent 68%),
+    radial-gradient(ellipse 400px 380px at 82% 68%, rgba(251,191,36,0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 320px 280px at 50% 48%, rgba(192,132,252,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 220px 180px at 75% 20%, rgba(240,71,140,0.12) 0%, transparent 75%),
+    radial-gradient(ellipse 180px 160px at 20% 80%, rgba(251,191,36,0.10) 0%, transparent 75%),
+    radial-gradient(ellipse 140px 120px at 55% 88%, rgba(192,132,252,0.14) 0%, transparent 78%);
+
+  --aside-bg: rgba(7, 0, 26, 0.94);
+  --aside-border: rgba(240, 171, 252, 0.22);
+  --aside-shadow: rgba(0, 0, 0, 0.5);
+  --inactive-text: #7c3aed;
   --cat-1: #f0abfc;
-  --cat-1-soft: #4c1d95;
+  --cat-1-soft: #3b0764;
   --cat-2: #fbbf24;
-  --cat-2-soft: #3d1268;
+  --cat-2-soft: #4c1d95;
   --cat-3: #ec4899;
   --cat-3-soft: #5b1a8e;
-  --col-tint-1: #4c1d95;
-  --col-tint-2: #3d1268;
+  --col-tint-1: #3b0764;
+  --col-tint-2: #4c1d95;
   --col-tint-3: #5b1a8e;
+}
+
+/* 星河主题专属：深邃底色 + 多层星云渐变 */
+#root.theme-galaxy::before {
+  opacity: 1;
+  background-image:
+    radial-gradient(ellipse 600px 400px at 15% 25%, rgba(240,71,140,0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 500px 450px at 80% 70%, rgba(251,191,36,0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 350px at 50% 50%, rgba(192,132,252,0.22) 0%, transparent 72%),
+    radial-gradient(ellipse 280px 220px at 70% 18%, rgba(240,71,140,0.14) 0%, transparent 75%),
+    radial-gradient(ellipse 220px 180px at 22% 78%, rgba(251,191,36,0.12) 0%, transparent 75%),
+    radial-gradient(ellipse 180px 140px at 55% 90%, rgba(192,132,252,0.16) 0%, transparent 78%);
+  mix-blend-mode: screen;
+  animation: galaxy-nebula-drift 28s ease-in-out infinite alternate;
+}
+
+/* 星河主题专属：流星层由 GalaxyBackground 组件渲染 */
+
+@keyframes galaxy-nebula-drift {
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    filter: hue-rotate(8deg) brightness(1.05);
+    transform: scale(1.03) translate(-10px, -8px);
+  }
+  100% {
+    filter: hue-rotate(-5deg) brightness(0.98);
+    transform: scale(1.05) translate(8px, 6px);
+  }
+}
+
+@keyframes galaxy-star-twinkle-2 {
+  0%   { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* 星河主题：星云脉冲、繁星闪烁 */
+@keyframes galaxy-nebula-pulse {
+  0%   { opacity: 0.6; transform: scale(0.95) translate(0, 0); }
+  100% { opacity: 1;   transform: scale(1.08) translate(-12px, -8px); }
+}
+@keyframes galaxy-star-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+@keyframes galaxy-star-twinkle-base {
+  0%   { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+@keyframes galaxy-star-twinkle-1 {
+  0%   { opacity: 0.6; }
+  100% { opacity: 0.95; }
+}
+
+/* 星河主题：自然流星 — 头 + 长尾 + 光晕 + 闪烁
+   每颗流星有独立的角度、颜色和延迟，模拟真实流星划过夜空的效果 */
+
+/* --- 流星头移动（匀速滑落，淡入淡出） --- */
+@keyframes galaxy-meteor-move-0 {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; transform: translate(1500px, 800px); }
+  100% { opacity: 0; transform: translate(1500px, 800px); }
+}
+@keyframes galaxy-meteor-move-1 {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; transform: translate(1600px, 880px); }
+  100% { opacity: 0; transform: translate(1600px, 880px); }
+}
+@keyframes galaxy-meteor-move-2 {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  14%  { opacity: 1; }
+  86%  { opacity: 1; transform: translate(1450px, 780px); }
+  100% { opacity: 0; transform: translate(1450px, 780px); }
+}
+@keyframes galaxy-meteor-move-3 {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  8%   { opacity: 1; }
+  88%  { opacity: 1; transform: translate(1580px, 850px); }
+  100% { opacity: 0; transform: translate(1580px, 850px); }
+}
+@keyframes galaxy-meteor-move-4 {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; transform: translate(1700px, 720px); }
+  100% { opacity: 0; transform: translate(1700px, 720px); }
+}
+
+/* --- 流星尾部亮度包络（平滑淡入淡出） --- */
+@keyframes galaxy-meteor-tail-0 {
+  0%   { opacity: 0; }
+  12%  { opacity: 0.88; }
+  88%  { opacity: 0.88; }
+  100% { opacity: 0; }
+}
+@keyframes galaxy-meteor-tail-1 {
+  0%   { opacity: 0; }
+  10%  { opacity: 0.85; }
+  90%  { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+@keyframes galaxy-meteor-tail-2 {
+  0%   { opacity: 0; }
+  14%  { opacity: 0.86; }
+  86%  { opacity: 0.86; }
+  100% { opacity: 0; }
+}
+@keyframes galaxy-meteor-tail-3 {
+  0%   { opacity: 0; }
+  8%   { opacity: 0.87; }
+  88%  { opacity: 0.87; }
+  100% { opacity: 0; }
+}
+@keyframes galaxy-meteor-tail-4 {
+  0%   { opacity: 0; }
+  10%  { opacity: 0.85; }
+  90%  { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+/* --- 流星光晕（头部辉光） --- */
+@keyframes galaxy-meteor-halo-0 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  12%  { opacity: 0.65; transform: scale(1); }
+  88%  { opacity: 0.65; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-halo-1 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  10%  { opacity: 0.6; transform: scale(1); }
+  90%  { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-halo-2 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  14%  { opacity: 0.63; transform: scale(1); }
+  86%  { opacity: 0.63; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-halo-3 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  8%   { opacity: 0.65; transform: scale(1); }
+  88%  { opacity: 0.65; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-halo-4 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  10%  { opacity: 0.6; transform: scale(1); }
+  90%  { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+
+/* --- 流星头核心（平滑淡入淡出） --- */
+@keyframes galaxy-meteor-sparkle-0 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  12%  { opacity: 1;   transform: scale(1); }
+  88%  { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-sparkle-1 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  10%  { opacity: 1;   transform: scale(1); }
+  90%  { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-sparkle-2 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  14%  { opacity: 1;   transform: scale(1); }
+  86%  { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-sparkle-3 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  8%   { opacity: 1;   transform: scale(1); }
+  88%  { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+@keyframes galaxy-meteor-sparkle-4 {
+  0%   { opacity: 0;   transform: scale(0.7); }
+  10%  { opacity: 1;   transform: scale(1); }
+  90%  { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.7); }
+}
+
+/* 星河主题专属：卡片 — 玫红描边 + 金色硬阴影，与黑夜主题明显区分 */
+#root.theme-galaxy .soft-card {
+  border-color: #f0abfc;
+  box-shadow:
+    4px 4px 0 #fbbf24,
+    0 0 24px rgba(240, 171, 252, 0.15),
+    0 0 60px rgba(251, 191, 36, 0.06);
+}
+#root.theme-galaxy .soft-card:hover {
+  box-shadow:
+    6px 6px 0 #fbbf24,
+    0 0 32px rgba(240, 171, 252, 0.22),
+    0 0 80px rgba(251, 191, 36, 0.10);
+}
+#root.theme-galaxy .neo-btn {
+  border-color: #f0abfc;
+  box-shadow: 4px 4px 0 #fbbf24, 0 0 16px rgba(240, 171, 252, 0.10);
+}
+#root.theme-galaxy .neo-btn:active {
+  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.08);
+}
+#root.theme-galaxy .soft-input {
+  border-color: #f0abfc;
+  box-shadow: 4px 4px 0 #fbbf24;
+  color: #faf5ff;
+}
+#root.theme-galaxy .soft-input:focus {
+  box-shadow: 2px 2px 0 #fbbf24, 0 0 12px rgba(240, 171, 252, 0.18);
+}
+
+/* 星河主题专属：进度环金色发光 */
+#root.theme-galaxy .ring-progress-fill {
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 8px rgba(251, 191, 36, 0.3));
 }
 
 /* ---------- 主题壁纸层（所有主题通用） ---------- */
