@@ -1,59 +1,75 @@
 import { motion } from 'framer-motion'
 import { useMascotStore } from '../../store/mascotStore'
+import type { MascotMood } from '../../types'
 
 interface Props {
   size?: number
 }
 
+const moodAnimations: Record<MascotMood, { y?: number[]; rotate?: number[] }> = {
+  focus: { y: [0, -3, 0] },
+  sleepy: { rotate: [0, 2, -2, 0] },
+  happy: { y: [0, -10, 0] },
+  sad: { y: [0, 3, 0] },
+  celebrate: { y: [0, -14, 0], rotate: [0, -5, 5, 0] },
+}
+
 export default function MascotFull({ size = 200 }: Props) {
   const { mood } = useMascotStore()
 
-  const animations = {
-    focus: { y: [0, -3, 0], duration: 1.5, repeat: Infinity },
-    sleepy: { rotate: [0, 2, -2, 0], duration: 3, repeat: Infinity },
-    happy: { y: [0, -10, 0], duration: 0.6, repeat: Infinity },
-    sad: { y: [0, 3, 0], duration: 2, repeat: Infinity },
-    celebrate: { y: [0, -20, 0], rotate: [0, -5, 5, 0], duration: 0.5, repeat: Infinity },
-  }
-
   return (
     <motion.div
-      className="flex items-center justify-center"
-      animate={animations[mood]}
-      transition={{ ease: 'easeInOut' }}
+      className="flex items-center justify-center relative"
+      animate={moodAnimations[mood]}
+      transition={{
+        ease: 'easeInOut',
+        duration: mood === 'celebrate' ? 0.5 : 1.5,
+        repeat: Infinity,
+      }}
     >
-      <svg width={size} height={size} viewBox="-60 -60 120 120">
-        <style>{`
-          @keyframes breathe { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
-          .full-body { animation: breathe 2s ease-in-out infinite; transform-origin: center bottom; }
-        `}</style>
-        <g className="full-body">
-          <ellipse cx="0" cy="30" rx="30" ry="10" fill="rgba(0,0,0,0.1)"/>
-          <ellipse cx="0" cy="15" rx="36" ry="32" fill="#FFE0B2" stroke="#FF9F43" strokeWidth="2.5"/>
-          <polygon points="-30,-15 -42,-40 -18,-20" fill="#FFE0B2" stroke="#FF9F43" strokeWidth="2.5"/>
-          <polygon points="30,-15 42,-40 18,-20" fill="#FFE0B2" stroke="#FF9F43" strokeWidth="2.5"/>
-          <polygon points="-28,-12 -36,-32 -22,-18" fill="#FFCC80"/>
-          <polygon points="28,-12 36,-32 22,-18" fill="#FFCC80"/>
-          <ellipse cx="-12" cy="8" rx="6" ry="7" fill="#333"/>
-          <ellipse cx="12" cy="8" rx="6" ry="7" fill="#333"/>
-          <ellipse cx="-10" cy="5" rx="2" ry="2" fill="white"/>
-          <ellipse cx="14" cy="5" rx="2" ry="2" fill="white"/>
-          <circle cx="0" cy="18" r="3" fill="#FF6B6B"/>
-          {mood === 'happy' || mood === 'celebrate' ? (
-            <path d="M-12 22 Q0 34 12 22" fill="none" stroke="#333" strokeWidth="2.5" strokeLinecap="round"/>
-          ) : mood === 'sad' ? (
-            <path d="M-10 32 Q0 22 10 32" fill="none" stroke="#333" strokeWidth="2.5" strokeLinecap="round"/>
-          ) : (
-            <path d="M-8 26 L8 26" stroke="#333" strokeWidth="2.5" strokeLinecap="round"/>
-          )}
-          <path d="M-24 0 L-32 -3 M-24 5 L-32 5 M24 0 L32 -3 M24 5 L32 5" stroke="#333" strokeWidth="1.2"/>
-          <ellipse cx="-18" cy="16" rx="6" ry="4" fill="#FFCDD2" opacity="0.5"/>
-          <ellipse cx="18" cy="16" rx="6" ry="4" fill="#FFCDD2" opacity="0.5"/>
-        </g>
-        {(mood === 'focus' || mood === 'sleepy') && (
-          <path d="M-32 -38 L32 -38 L26 -46 L-26 -46 Z" fill="#2C3E50"/>
-        )}
-      </svg>
+      <div
+        className="absolute inset-0 rounded-full opacity-20 blur-lg"
+        style={{
+          background: mood === 'happy'
+            ? 'radial-gradient(circle, #55efc4 0%, transparent 70%)'
+            : mood === 'sad'
+              ? 'radial-gradient(circle, #ff7675 0%, transparent 70%)'
+              : mood === 'celebrate'
+                ? 'radial-gradient(circle, #ffd93d 0%, transparent 70%)'
+                : 'radial-gradient(circle, #a29bfe 0%, transparent 70%)',
+          width: size * 0.8,
+          height: size * 0.8,
+        }}
+      />
+      <img
+        src={`/mascot/${mood === 'sleepy' ? 'focus' : mood}.svg`}
+        alt="猫猫"
+        width={size}
+        height={size}
+        draggable={false}
+        className="select-none"
+      />
+      {/* 空闲时星星闪烁，示意随时待命 */}
+      {mood === 'sleepy' && (
+        <>
+          <motion.svg
+            className="absolute top-2 -right-2 w-4 h-4 text-yellow-400 select-none"
+            viewBox="0 0 24 24" fill="currentColor"
+            animate={{ scale: [0.5, 1, 0.5], opacity: [0.4, 1, 0.4], rotate: [0, 20, -20, 0] }}
+            transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity, delay: 0 }}
+          >
+            <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+          </motion.svg>
+          <motion.svg
+            className="absolute -top-2 right-3 w-3 h-3 text-green-400 select-none"
+            viewBox="0 0 24 24" fill="currentColor"
+            animate={{ scale: [0.4, 0.9, 0.4], opacity: [0.3, 1, 0.3], rotate: [180, 200, 180, 160] }}
+            transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity, delay: 0.7 }}
+          >
+            <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+          </motion.svg>
+        </>
+      )}
     </motion.div>
   )
 }

@@ -6,10 +6,15 @@ interface AppDB extends DBSchema {
     value: { id?: number; date: string; duration: number; moduleId: string }
     indexes: { 'by-date': string }
   }
+  dailyActivity: {
+    key: number
+    value: { id?: number; date: string; source: string }
+    indexes: { 'by-date': string }
+  }
   flashcards: {
     key: number
     value: {
-      id?: number; front: string; back: string; category: string;
+      front: string; back: string; category: string;
       easeFactor: number; interval: number; repetitions: number;
       nextReview: string; due: boolean
     }
@@ -32,6 +37,23 @@ interface AppDB extends DBSchema {
     key: number
     value: { id?: number; title: string; content: string; date: string; tags: string }
   }
+  newsItems: {
+    key: string
+    value: {
+      link: string; title: string; description: string;
+      source_name: string; category: string; published: string; fetchedAt: number
+    }
+    indexes: { 'by-fetchedAt': number; 'by-category': string; 'by-source': string }
+  }
+  pointsTransactions: {
+    key: number
+    value: { id?: number; amount: number; source: string; type: 'earn' | 'spend'; note: string; date: string }
+    indexes: { 'by-date': string }
+  }
+  themes: {
+    key: string
+    value: { themeId: string; purchasedAt: string; totalSpent: number }
+  }
   settings: {
     key: string
     value: { key: string; val: string }
@@ -39,19 +61,33 @@ interface AppDB extends DBSchema {
 }
 
 const DB_NAME = 'kaogong-db'
-const DB_VERSION = 1
+const DB_VERSION = 7
 
 export async function getDB(): Promise<IDBPDatabase<AppDB>> {
   return openDB<AppDB>(DB_NAME, DB_VERSION, {
-    upgrade(db) {
+    async upgrade(db) {
       if (!db.objectStoreNames.contains('studySessions')) {
         const ss = db.createObjectStore('studySessions', { keyPath: 'id', autoIncrement: true })
         ss.createIndex('by-date', 'date')
+      }
+      if (!db.objectStoreNames.contains('dailyActivity')) {
+        const da = db.createObjectStore('dailyActivity', { keyPath: 'id', autoIncrement: true })
+        da.createIndex('by-date', 'date')
       }
       if (!db.objectStoreNames.contains('flashcards')) {
         const fc = db.createObjectStore('flashcards', { keyPath: 'id', autoIncrement: true })
         fc.createIndex('by-due', 'due')
         fc.createIndex('by-category', 'category')
+      } else if (db.version < 2) {
+        const oldStore = db.transaction('flashcards', 'readonly').objectStore('flashcards')
+        const oldData = await oldStore.getAll()
+        db.deleteObjectStore('flashcards')
+        const fc = db.createObjectStore('flashcards', { keyPath: 'id', autoIncrement: true })
+        fc.createIndex('by-due', 'due')
+        fc.createIndex('by-category', 'category')
+        for (const record of oldData) {
+          fc.add(record)
+        }
       }
       if (!db.objectStoreNames.contains('quizQuestions')) {
         const qq = db.createObjectStore('quizQuestions', { keyPath: 'id', autoIncrement: true })
@@ -66,8 +102,21 @@ export async function getDB(): Promise<IDBPDatabase<AppDB>> {
       if (!db.objectStoreNames.contains('newsNotes')) {
         db.createObjectStore('newsNotes', { keyPath: 'id', autoIncrement: true })
       }
+      if (!db.objectStoreNames.contains('newsItems')) {
+        const ni = db.createObjectStore('newsItems', { keyPath: 'link' })
+        ni.createIndex('by-fetchedAt', 'fetchedAt')
+        ni.createIndex('by-category', 'category')
+        ni.createIndex('by-source', 'source_name')
+      }
       if (!db.objectStoreNames.contains('settings')) {
         db.createObjectStore('settings', { keyPath: 'key' })
+      }
+      if (!db.objectStoreNames.contains('pointsTransactions')) {
+        const pt = db.createObjectStore('pointsTransactions', { keyPath: 'id', autoIncrement: true })
+        pt.createIndex('by-date', 'date')
+      }
+      if (!db.objectStoreNames.contains('themes')) {
+        db.createObjectStore('themes', { keyPath: 'themeId' })
       }
     },
   })

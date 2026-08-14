@@ -1,0 +1,8 @@
+[source.crates-io]
+registry = "sparse+https://mirrors.aliyun.com/crates.io-index/"
+
+[registries.crates-io]
+protocol = "sparse"
+
+[net]
+retry = 5

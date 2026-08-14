@@ -27,3 +27,31 @@ export async function updatePlan(id: number, updates: Partial<StudyPlan>) {
   if (!plan) return
   await db.put('studyPlans', { ...plan, ...updates })
 }
+
+export async function deletePlan(id: number) {
+  const db = await getDB()
+  await db.delete('studyPlans', id)
+}
+
+export async function markDayActive() {
+  try {
+    const db = await getDB()
+    const today = new Date().toISOString().split('T')[0]
+    const records = await db.getAll('dailyActivity')
+    if (!records.some((r: { date: string }) => r.date === today)) {
+      await db.add('dailyActivity', { date: today, source: 'plan' })
+    }
+  } catch {
+    // dailyActivity store might not exist yet
+  }
+}
+
+export async function getActiveDates(): Promise<string[]> {
+  try {
+    const db = await getDB()
+    const records = await db.getAll('dailyActivity')
+    return records.map((r: { date: string }) => r.date)
+  } catch {
+    return []
+  }
+}

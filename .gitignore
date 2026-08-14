@@ -3,3 +3,5 @@ dist/
 src-tauri/target/
 *.local
 .env
+rustup-init.exe
+.vite-dev.log

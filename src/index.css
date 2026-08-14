@@ -5,6 +5,26 @@
 :root {
   --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Macaron 配色 === */
+  --bg-color: #f5f0ff;
+  --card-bg: #ffffff;
+  --card-alt: #faf7ff;
+  --purple: #6c5ce7;
+  --yellow: #ffd93d;
+  --mint: #55efc4;
+  --pink: #ff7675;
+  --blue: #74b9ff;
+  --coral: #fab1a0;
+  --lemon: #fff3a8;
+  --lavender: #a29bfe;
+  --peach: #ffeaa7;
+
+  /* === Soft UI 阴影变量 === */
+  --shadow-soft: 0 4px 12px rgba(108, 92, 231, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-soft-lg: 0 8px 24px rgba(108, 92, 231, 0.10), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-soft-sm: 0 2px 6px rgba(108, 92, 231, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-soft-hover: 0 8px 24px rgba(108, 92, 231, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -13,8 +33,647 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 body {
-  font-family: 'ZCOOL KuaiLe', 'Fredoka', sans-serif;
+  font-family: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei',
+    'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif;
   overflow: hidden;
   user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-color);
+}
+
+/* === 桌面端根字号 === */
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* === backdrop-filter 兼容 === */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-dock,
+  .glass-clock {
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+}
+
+.glass-dock,
+.glass-clock {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* === 隐藏 number input 箭头 === */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* === 滚动条美化 === */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 92, 231, 0.25);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 92, 231, 0.45);
+}
+
+/* === 手机端安全区域 === */
+.safe-area-bottom {
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+}
+
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  body {
+    overscroll-behavior: none;
+  }
+}
+
+/* === 桌面端最大宽度 === */
+@media (min-width: 768px) {
+  .md\:mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* === 通用 Soft UI 卡片（组件类） === */
+.soft-card {
+  background: var(--card-bg);
+  border: 2px solid var(--purple);
+  border-radius: 24px;
+  box-shadow: 4px 4px 0 var(--purple);
+  transition: box-shadow 0.2s ease;
+  will-change: transform;
+}
+.soft-card:hover {
+  box-shadow: 6px 6px 0 var(--purple);
+}
+
+/* === 拟物凸起按钮 === */
+.neo-btn {
+  background: var(--card-bg);
+  border: 2px solid var(--purple);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--purple);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--purple);
+}
+.neo-btn:disabled {
+  background: var(--card-bg);
+  color: #c4b5fd;
+  border-color: #e8e0f5;
+  box-shadow: 2px 2px 0 #e8e0f5;
+  cursor: not-allowed;
+}
+
+/* === Bento Grid 便当盒栅格（自定义） === */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .bento-grid {
+    gap: 20px;
+  }
+}
+
+/* === 毛玻璃遮罩 === */
+.glass-overlay {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* === 环形进度条辅助 === */
+.ring-progress-track {
+  stroke: #f0e6ff;
+  fill: none;
+  stroke-linecap: round;
+}
+.ring-progress-fill {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === 马卡龙色系徽章 === */
+.badge-macaron {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-family: 'LXGW WenKai', sans-serif;
+  font-weight: 600;
+}
+
+/* === 手绘风边框（虚线） === */
+.dashed-border {
+  border: 2px dashed var(--lavender);
+  border-radius: 24px;
+}
+
+/* === 输入框统一样式 === */
+.soft-input {
+  background: var(--card-bg);
+  border: 2px solid var(--purple);
+  border-radius: 16px;
+  padding: 8px 14px;
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 14px;
+  color: #2d3436;
+  outline: none;
+  box-shadow: 4px 4px 0 var(--purple);
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+.soft-input:focus {
+  border-color: var(--purple);
+  box-shadow: 2px 2px 0 var(--purple);
+  transform: translate(2px, 2px);
+}
+
+/* === 标签/滤镜胶囊 === */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-family: 'LXGW WenKai', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* === 卡片角标（小图标圆底） === */
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  font-size: 20px;
+}
+
+/* ============================================================
+   主题系统 — 6 套完整系统级视觉方案
+   每个主题通过 CSS 类应用到 #root，全面覆盖：
+   背景壁纸（含纹理图案）、卡片底色、主色调、边框、阴影、文字色
+   ============================================================ */
+
+/* ---------- 白天主题（免费） ---------- */
+#root.theme-day {
+  --bg-1: #faf7ff;
+  --bg-2: #f5f0ff;
+  --bg-3: #f0e6ff;
+  --wallpaper-url: none;
+  --card-bg: #ffffff;
+  --card-alt: #faf7ff;
+  --accent: #6c5ce7;
+  --accent-soft: rgba(108, 92, 231, 0.12);
+  --accent-2: #ffd93d;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --border: #6c5ce7;
+  --border-soft: #e8e0f5;
+  --shadow-color: rgba(108, 92, 231, 0.10);
+  --shadow-harsh: #6c5ce7;
+  --input-bg: #ffffff;
+  --disabled-text: #c4b5fd;
+  --disabled-border: #e8e0f5;
+  --ring-track: #f0e6ff;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --scrollbar-thumb: rgba(108, 92, 231, 0.25);
+  --scrollbar-hover: rgba(108, 92, 231, 0.45);
+  --pattern-overlay: none;
+  --aside-bg: rgba(255, 255, 255, 0.85);
+  --aside-border: rgba(108, 92, 231, 0.08);
+  --aside-shadow: rgba(108, 92, 231, 0.06);
+  --inactive-text: #9ca3af;
+  --cat-1: #6c5ce7;
+  --cat-1-soft: #ede7ff;
+  --cat-2: #74b9ff;
+  --cat-2-soft: #e3f2fd;
+  --cat-3: #55efc4;
+  --cat-3-soft: #e8f8f0;
+  --col-tint-1: #ede7ff;
+  --col-tint-2: #e3f2fd;
+  --col-tint-3: #e8f8f0;
+}
+
+/* ---------- 黑夜主题（免费） ---------- */
+#root.theme-night {
+  --bg-1: #14112a;
+  --bg-2: #1a1744;
+  --bg-3: #0f0d2e;
+  --wallpaper-url: none;
+  --card-bg: #1e1b3d;
+  --card-alt: #25224a;
+  --accent: #a29bfe;
+  --accent-soft: rgba(162, 155, 254, 0.15);
+  --accent-2: #74b9ff;
+  --text-primary: #dfe6e9;
+  --text-secondary: #b2bec3;
+  --border: #6c5ce7;
+  --border-soft: #2d2a5e;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-harsh: #6c5ce7;
+  --input-bg: #1e1b3d;
+  --disabled-text: #636e72;
+  --disabled-border: #2d2a5e;
+  --ring-track: #2d2a5e;
+  --glass-bg: rgba(30, 27, 61, 0.7);
+  --glass-border: rgba(108, 92, 231, 0.3);
+  --scrollbar-thumb: rgba(162, 155, 254, 0.35);
+  --scrollbar-hover: rgba(162, 155, 254, 0.6);
+  --pattern-overlay:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.3) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,0.5) 50%, transparent 50%),
+    radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.3) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,0.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.25) 50%, transparent 50%),
+    radial-gradient(1px 1px at 90% 85%, rgba(255,255,255,0.35) 50%, transparent 50%);
+  --aside-bg: rgba(30, 27, 61, 0.92);
+  --aside-border: rgba(108, 92, 231, 0.2);
+  --aside-shadow: rgba(0, 0, 0, 0.3);
+  --inactive-text: #636e72;
+  --cat-1: #a29bfe;
+  --cat-1-soft: #2d2468;
+  --cat-2: #74b9ff;
+  --cat-2-soft: #1e2a5e;
+  --cat-3: #55efc4;
+  --cat-3-soft: #1a3a45;
+  --col-tint-1: #2d2468;
+  --col-tint-2: #1e2a5e;
+  --col-tint-3: #1a3a45;
+}
+
+/* ---------- 樱花主题（100 积分） ---------- */
+#root.theme-sakura {
+  --bg-1: #fff5f7;
+  --bg-2: #ffe8ee;
+  --bg-3: #ffd6e0;
+  --wallpaper-url: none;
+  --card-bg: #ffffff;
+  --card-alt: #fff5f7;
+  --accent: #e84393;
+  --accent-soft: rgba(232, 67, 147, 0.12);
+  --accent-2: #fd79a8;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --border: #e84393;
+  --border-soft: #fdd8e3;
+  --shadow-color: rgba(232, 67, 147, 0.12);
+  --shadow-harsh: #e84393;
+  --input-bg: #ffffff;
+  --disabled-text: #fab1d0;
+  --disabled-border: #fdd8e3;
+  --ring-track: #ffe8ee;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --scrollbar-thumb: rgba(232, 67, 147, 0.3);
+  --scrollbar-hover: rgba(232, 67, 147, 0.55);
+  --pattern-overlay:
+    radial-gradient(ellipse 80px 60px at 15% 25%, rgba(253,121,168,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60px 80px at 75% 15%, rgba(232,67,147,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 70px 70px at 85% 70%, rgba(253,121,168,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 50px 60px at 30% 80%, rgba(232,67,147,0.1) 0%, transparent 70%);
+  --aside-bg: rgba(255, 255, 255, 0.85);
+  --aside-border: rgba(232, 67, 147, 0.1);
+  --aside-shadow: rgba(232, 67, 147, 0.06);
+  --inactive-text: #9ca3af;
+  --cat-1: #e84393;
+  --cat-1-soft: #fdd8e3;
+  --cat-2: #fd79a8;
+  --cat-2-soft: #fef0f5;
+  --cat-3: #88d4f0;
+  --cat-3-soft: #e8f0f8;
+  --col-tint-1: #fdd8e3;
+  --col-tint-2: #fef0f5;
+  --col-tint-3: #e8f0f8;
+}
+
+/* ---------- 森林主题（150 积分） ---------- */
+#root.theme-forest {
+  --bg-1: #f8fdfa;
+  --bg-2: #ecf5ef;
+  --bg-3: #dde9e2;
+  --wallpaper-url: none;
+  --card-bg: #fcfefc;
+  --card-alt: #f3f8f5;
+  --accent: #4caf50;
+  --accent-soft: rgba(76, 175, 80, 0.08);
+  --accent-2: #81c784;
+  --text-primary: #1b5e20;
+  --text-secondary: #4a7c59;
+  --border: #81c784;
+  --border-soft: #d4ead9;
+  --shadow-color: rgba(76, 175, 80, 0.05);
+  --shadow-harsh: #81c784;
+  --input-bg: #fcfefc;
+  --disabled-text: #c8e6c9;
+  --disabled-border: #d4ead9;
+  --ring-track: #ecf5ef;
+  --glass-bg: rgba(252, 254, 252, 0.7);
+  --glass-border: rgba(76, 175, 80, 0.10);
+  --scrollbar-thumb: rgba(76, 175, 80, 0.2);
+  --scrollbar-hover: rgba(76, 175, 80, 0.4);
+  --pattern-overlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%232e7d32' stroke-width='1' opacity='0.07'%3E%3Cpath d='M30 30 Q45 15 60 30 Q45 45 30 30 Z'/%3E%3Cpath d='M120 60 Q138 42 156 60 Q138 78 120 60 Z'/%3E%3Cpath d='M50 130 Q68 112 86 130 Q68 148 50 130 Z'/%3E%3Cpath d='M110 150 Q128 132 146 150 Q128 168 110 150 Z'/%3E%3Cpath d='M90 20 Q102 8 114 20 Q102 32 90 20 Z'/%3E%3Cpath d='M20 90 Q32 78 44 90 Q32 102 20 90 Z'/%3E%3Cpath d='M150 110 Q162 98 174 110 Q162 122 150 110 Z'/%3E%3Cpath d='M70 70 L70 90'/%3E%3Cpath d='M70 70 L62 62'/%3E%3Cpath d='M70 70 L78 62'/%3E%3Cpath d='M140 30 L140 50'/%3E%3Cpath d='M140 30 L132 22'/%3E%3Cpath d='M140 30 L148 22'/%3E%3Cpath d='M40 160 L40 178'/%3E%3Cpath d='M40 160 L32 152'/%3E%3Cpath d='M40 160 L48 152'/%3E%3Cpath d='M100 100 L100 118'/%3E%3Cpath d='M100 100 L92 92'/%3E%3Cpath d='M100 100 L108 92'/%3E%3C/g%3E%3Cg fill='%234caf50' opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='12'/%3E%3Ccircle cx='160' cy='50' r='10'/%3E%3Ccircle cx='30' cy='150' r='14'/%3E%3Ccircle cx='140' cy='160' r='11'/%3E%3Ccircle cx='90' cy='80' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  --aside-bg: rgba(252, 254, 252, 0.9);
+  --aside-border: rgba(76, 175, 80, 0.06);
+  --aside-shadow: rgba(76, 175, 80, 0.03);
+  --inactive-text: #c8e6c9;
+  --cat-1: #66bb6a;
+  --cat-1-soft: #ecf5ef;
+  --cat-2: #a5d6a7;
+  --cat-2-soft: #f0f7f2;
+  --cat-3: #aed581;
+  --cat-3-soft: #eef5e9;
+  --col-tint-1: #ecf5ef;
+  --col-tint-2: #f0f7f2;
+  --col-tint-3: #eef5e9;
+}
+
+/* ---------- 海洋主题（200 积分） ---------- */
+#root.theme-ocean {
+  --bg-1: #dbeafe;
+  --bg-2: #93c5fd;
+  --bg-3: #60a5fa;
+  --wallpaper-url: none;
+  --card-bg: #ffffff;
+  --card-alt: #dbeafe;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.10);
+  --accent-2: #0ea5e9;
+  --text-primary: #1e3a8a;
+  --text-secondary: #475569;
+  --border: #2563eb;
+  --border-soft: #93c5fd;
+  --shadow-color: rgba(37, 99, 235, 0.10);
+  --shadow-harsh: #2563eb;
+  --input-bg: #ffffff;
+  --disabled-text: #93c5fd;
+  --disabled-border: #93c5fd;
+  --ring-track: #dbeafe;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --scrollbar-thumb: rgba(37, 99, 235, 0.30);
+  --scrollbar-hover: rgba(37, 99, 235, 0.55);
+  --pattern-overlay: none;
+  --aside-bg: rgba(255, 255, 255, 0.90);
+  --aside-border: rgba(37, 99, 235, 0.10);
+  --aside-shadow: rgba(37, 99, 235, 0.05);
+  --inactive-text: #93c5fd;
+  --cat-1: #2563eb;
+  --cat-1-soft: #dbeafe;
+  --cat-2: #0ea5e9;
+  --cat-2-soft: #e0f2fe;
+  --cat-3: #38bdf8;
+  --cat-3-soft: #e1f5fe;
+  --col-tint-1: #dbeafe;
+  --col-tint-2: #e0f2fe;
+  --col-tint-3: #e1f5fe;
+}
+
+/* ---------- 星河主题（300 积分 / 传说） ---------- */
+#root.theme-galaxy {
+  --bg-1: #1a0533;
+  --bg-2: #3d1268;
+  --bg-3: #6b21a8;
+  --wallpaper-url: none;
+  --card-bg: #2d1054;
+  --card-alt: #3d1268;
+  --accent: #f0abfc;
+  --accent-soft: rgba(240, 171, 252, 0.15);
+  --accent-2: #fbbf24;
+  --text-primary: #f5f3ff;
+  --text-secondary: #c4b5fd;
+  --border: #f0abfc;
+  --border-soft: #6b21a8;
+  --shadow-color: rgba(240, 171, 252, 0.15);
+  --shadow-harsh: #f0abfc;
+  --input-bg: #2d1054;
+  --disabled-text: #a78bfa;
+  --disabled-border: #6b21a8;
+  --ring-track: #4c1d95;
+  --glass-bg: rgba(45, 16, 84, 0.7);
+  --glass-border: rgba(240, 171, 252, 0.3);
+  --scrollbar-thumb: rgba(240, 171, 252, 0.35);
+  --scrollbar-hover: rgba(240, 171, 252, 0.6);
+  --pattern-overlay:
+    radial-gradient(2px 2px at 12% 18%, #fff 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 28% 42%, #fbbf24 50%, transparent 50%),
+    radial-gradient(1px 1px at 45% 12%, #fff 50%, transparent 50%),
+    radial-gradient(2px 2px at 60% 55%, #f0abfc 50%, transparent 50%),
+    radial-gradient(1px 1px at 75% 25%, #fff 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 35% 78%, #fbbf24 50%, transparent 50%),
+    radial-gradient(1px 1px at 55% 88%, #fff 50%, transparent 50%),
+    radial-gradient(2px 2px at 8% 65%, #f0abfc 50%, transparent 50%),
+    radial-gradient(1px 1px at 92% 8%, #fff 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 65% 38%, #fbbf24 50%, transparent 50%),
+    radial-gradient(1px 1px at 22% 92%, #fff 50%, transparent 50%),
+    radial-gradient(ellipse 300px 200px at 25% 30%, rgba(217,70,239,0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 250px 250px at 75% 70%, rgba(251,191,36,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 180px 200px at 55% 45%, rgba(236,72,153,0.15) 0%, transparent 70%);
+  --aside-bg: rgba(26, 5, 51, 0.92);
+  --aside-border: rgba(240, 171, 252, 0.2);
+  --aside-shadow: rgba(0, 0, 0, 0.4);
+  --inactive-text: #a78bfa;
+  --cat-1: #f0abfc;
+  --cat-1-soft: #4c1d95;
+  --cat-2: #fbbf24;
+  --cat-2-soft: #3d1268;
+  --cat-3: #ec4899;
+  --cat-3-soft: #5b1a8e;
+  --col-tint-1: #4c1d95;
+  --col-tint-2: #3d1268;
+  --col-tint-3: #5b1a8e;
+}
+
+/* ---------- 主题壁纸层（所有主题通用） ---------- */
+.theme-day, .theme-night, .theme-sakura, .theme-forest, .theme-ocean, .theme-galaxy {
+  background:
+    var(--pattern-overlay),
+    linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+  background-color: var(--bg-2);
+  color: var(--text-primary);
+  transition: background 0.6s ease, color 0.3s ease;
+}
+
+/* 全局壁纸层：用 ::before 伪元素叠加纹理 */
+.theme-day::before,
+.theme-night::before,
+.theme-sakura::before,
+.theme-forest::before,
+.theme-ocean::before,
+.theme-galaxy::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--pattern-overlay);
+  opacity: 0.8;
+}
+
+/* ---------- 主题内的卡片、按钮、输入框统一样式 ---------- */
+.theme-day, .theme-night, .theme-sakura, .theme-forest, .theme-ocean, .theme-galaxy {
+  --card-bg: var(--card-bg);
+  --border-color: var(--border);
+  --shadow-harsh-color: var(--shadow-harsh);
+}
+
+.soft-card {
+  background: var(--card-bg, #ffffff);
+  border: 2px solid var(--border, #6c5ce7);
+  border-radius: 24px;
+  box-shadow: 4px 4px 0 var(--shadow-harsh, #6c5ce7);
+  transition: box-shadow 0.2s ease, background 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.soft-card:hover {
+  box-shadow: 6px 6px 0 var(--shadow-harsh, #6c5ce7);
+}
+
+.neo-btn {
+  background: var(--card-bg, #ffffff);
+  border: 2px solid var(--border, #6c5ce7);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--shadow-harsh, #6c5ce7);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.3s ease;
+  cursor: pointer;
+}
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--shadow-harsh, #6c5ce7);
+}
+.neo-btn:disabled {
+  background: var(--card-bg, #ffffff);
+  color: var(--disabled-text, #c4b5fd);
+  border-color: var(--disabled-border, #e8e0f5);
+  box-shadow: 2px 2px 0 var(--disabled-border, #e8e0f5);
+  cursor: not-allowed;
+}
+
+.soft-input {
+  background: var(--input-bg, #ffffff);
+  border: 2px solid var(--border, #6c5ce7);
+  border-radius: 16px;
+  padding: 8px 14px;
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary, #2d3436);
+  outline: none;
+  box-shadow: 4px 4px 0 var(--shadow-harsh, #6c5ce7);
+  transition: box-shadow 0.1s ease, transform 0.1s ease, background 0.3s ease;
+}
+.soft-input:focus {
+  border-color: var(--border, #6c5ce7);
+  box-shadow: 2px 2px 0 var(--shadow-harsh, #6c5ce7);
+  transform: translate(2px, 2px);
+}
+
+.glass-overlay {
+  background: var(--glass-bg, rgba(255,255,255,0.6));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.8));
+}
+
+.dashed-border {
+  border: 2px dashed var(--border-soft, #a29bfe);
+  border-radius: 24px;
+}
+
+.ring-progress-track {
+  stroke: var(--ring-track, #f0e6ff);
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* 滚动条跟随主题 */
+.theme-day, .theme-night, .theme-sakura, .theme-forest, .theme-ocean, .theme-galaxy {
+  --scrollbar-thumb-color: var(--scrollbar-thumb);
+  --scrollbar-hover-color: var(--scrollbar-hover);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color, rgba(108, 92, 231, 0.25));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover-color, rgba(108, 92, 231, 0.45));
+}
+
+/* ---------- 暗色主题下的 Tailwind 工具类覆盖 ---------- */
+#root.theme-night,
+#root.theme-galaxy {
+  .text-gray-800 { color: var(--text-primary) !important; }
+  .text-gray-700 { color: var(--text-primary) !important; }
+  .text-gray-600 { color: var(--text-secondary) !important; }
+  .text-gray-500 { color: var(--text-secondary) !important; }
+  .text-purple-600 { color: var(--accent) !important; }
+  .text-blue-500 { color: var(--accent-2) !important; }
+  .text-green-500 { color: #55efc4 !important; }
+  .text-blue-600 { color: var(--accent-2) !important; }
+  .bg-white { background-color: var(--card-bg) !important; }
+  .bg-white\/60 { background-color: color-mix(in srgb, var(--card-bg) 60%, transparent) !important; }
+  .bg-white\/40 { background-color: color-mix(in srgb, var(--card-bg) 40%, transparent) !important; }
+  .hover\:bg-white\/40:hover { background-color: color-mix(in srgb, var(--card-bg) 40%, transparent) !important; }
+  .bg-white\/80 { background-color: color-mix(in srgb, var(--card-bg) 80%, transparent) !important; }
+  .bg-purple-50 { background-color: var(--card-bg) !important; }
+  .bg-green-50 { background-color: var(--card-bg) !important; }
+  .bg-gray-50 { background-color: var(--card-alt) !important; }
+  .bg-gray-100 { background-color: var(--card-alt) !important; }
+  .bg-gray-200 { background-color: var(--border-soft) !important; }
+  .border-purple-600 { border-color: var(--accent) !important; }
+  .border-purple-500 { border-color: var(--accent) !important; }
+  .border-green-300 { border-color: var(--border) !important; }
+  .border-gray-200 { border-color: var(--border-soft) !important; }
+  .border-gray-100 { border-color: var(--border-soft) !important; }
+  .hover\:border-green-500:hover { border-color: var(--border) !important; }
+  .hover\:bg-gray-50:hover { background-color: var(--card-alt) !important; }
+  .hover\:bg-gray-100:hover { background-color: var(--card-alt) !important; }
+  .hover\:bg-gray-200:hover { background-color: var(--border-soft) !important; }
+}
+
+/* ---------- 主题切换过渡动画 ---------- */
+#root {
+  transition: color 0.3s ease;
 }

@@ -1,24 +1,34 @@
+import type { ComponentType } from 'react'
+
 export type MascotMood = 'focus' | 'sleepy' | 'happy' | 'sad' | 'celebrate'
 
-export type Theme = 'cream' | 'lightblue'
+export type ThemeId = 'day' | 'night' | 'sakura' | 'forest' | 'ocean' | 'galaxy'
 
-export type ModuleId = 'timer' | 'flashcards' | 'planner' | 'quiz' | 'news'
-
-export interface WindowState {
-  id: string
-  moduleId: ModuleId
-  title: string
-  x: number
-  y: number
-  width: number
-  height: number
-  zIndex: number
-  minimized: boolean
+export interface ThemeConfig {
+  id: ThemeId
+  name: string
+  nameEn: string
+  price: number
+  rarity: 'free' | 'classic' | 'limited' | 'legendary'
+  desc: string
+  cssClass: string
 }
+
+export type ModuleId = 'timer' | 'flashcards' | 'planner' | 'quiz' | 'news' | 'store'
+
+export type IconPack = 'default' | 'rainbow' | 'minimal' | 'animal' | 'candy' | 'starry' | 'botanical' | 'paws' | 'playful' | 'magic'
 
 export interface DesktopIcon {
   id: ModuleId
   name: string
-  x: number
-  y: number
+  icon: ComponentType<any>
+}
+
+export interface PointTransaction {
+  id?: number
+  amount: number
+  source: string
+  type: 'earn' | 'spend'
+  note: string
+  date: string
 }

@@ -1,5 +1,5 @@
 {
-  "productName": "考公Q版工作台",
+  "productName": "团子上岸小助手",
   "version": "0.1.0",
   "identifier": "com.kaogong.workbench",
   "build": {
@@ -9,7 +9,7 @@
   "app": {
     "windows": [
       {
-        "title": "考公Q版工作台",
+        "title": "团子上岸小助手",
         "width": 1280,
         "height": 720,
         "resizable": true,

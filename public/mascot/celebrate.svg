@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="bodyCelebrate" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fff8e1"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="32" cy="38" rx="10" ry="13" fill="url(#bodyCelebrate)" transform="rotate(-25 32 38)"/>
+  <ellipse cx="88" cy="38" rx="10" ry="13" fill="url(#bodyCelebrate)" transform="rotate(25 88 38)"/>
+  <ellipse cx="32" cy="38" rx="5" ry="7" fill="#ffd93d" opacity="0.7" transform="rotate(-25 32 38)"/>
+  <ellipse cx="88" cy="38" rx="5" ry="7" fill="#ffd93d" opacity="0.7" transform="rotate(25 88 38)"/>
+
+  <path d="M60 22 C 90 22, 102 50, 102 72 C 102 96, 82 108, 60 108 C 38 108, 18 96, 18 72 C 18 50, 30 22, 60 22 Z" fill="url(#bodyCelebrate)"/>
+
+  <!-- Star eyes -->
+  <g fill="#ffd93d" stroke="#2d3436" stroke-width="1.5" stroke-linejoin="round">
+    <polygon points="44,58 45.5,63 51,63 46.5,66 48.5,71 44,67.5 39.5,71 41.5,66 37,63 42.5,63"/>
+    <polygon points="76,58 77.5,63 83,63 78.5,66 80.5,71 76,67.5 71.5,71 73.5,66 69,63 74.5,63"/>
+  </g>
+
+  <ellipse cx="30" cy="80" rx="7" ry="4" fill="#ff7675" opacity="0.45"/>
+  <ellipse cx="90" cy="80" rx="7" ry="4" fill="#ff7675" opacity="0.45"/>
+
+  <ellipse cx="60" cy="76" rx="2.5" ry="1.8" fill="#ff7675"/>
+
+  <!-- Open happy mouth -->
+  <path d="M46 86 Q 60 98 74 86 Z" fill="#ff7675" opacity="0.7"/>
+  <path d="M46 86 Q 60 98 74 86" stroke="#2d3436" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Confetti sparkles -->
+  <circle cx="15" cy="45" r="3" fill="#ff7675"/>
+  <circle cx="105" cy="50" r="2.5" fill="#74b9ff"/>
+  <circle cx="20" cy="100" r="2" fill="#55efc4"/>
+  <circle cx="100" cy="95" r="3" fill="#a29bfe"/>
+</svg>

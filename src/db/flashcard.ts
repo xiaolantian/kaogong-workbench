@@ -12,9 +12,25 @@ export interface Flashcard {
   due: boolean
 }
 
+export interface RawCard {
+  front: string
+  back: string
+  category?: string
+}
+
+export async function getAllCards(): Promise<Flashcard[]> {
+  const db = await getDB()
+  return (await db.getAll('flashcards')) as unknown as Flashcard[]
+}
+
 export async function getDueCards(): Promise<Flashcard[]> {
   const db = await getDB()
-  return db.getAllFromIndex('flashcards', 'by-due', IDBKeyRange.only(true)) as Promise<Flashcard[]>
+  try {
+    return (await db.getAllFromIndex('flashcards', 'by-due', IDBKeyRange.only(true))) as unknown as Flashcard[]
+  } catch {
+    const all = await db.getAll('flashcards') as unknown as Flashcard[]
+    return all.filter(c => c.due === true)
+  }
 }
 
 export async function markReviewed(id: number, quality: number) {
@@ -45,4 +61,29 @@ export async function addCard(front: string, back: string, category: string) {
     nextReview: new Date().toISOString(), due: true,
   })
   return id as number
+}
+
+export async function importCards(raw: RawCard[]): Promise<number> {
+  const db = await getDB()
+  let count = 0
+  for (const c of raw) {
+    if (!c.front.trim() || !c.back.trim()) continue
+    await db.add('flashcards', {
+      front: c.front.trim(),
+      back: c.back.trim(),
+      category: c.category?.trim() || '自定义',
+      easeFactor: 2.5, interval: 0, repetitions: 0,
+      nextReview: new Date().toISOString(), due: true,
+    })
+    count += 1
+  }
+  return count
+}
+
+export async function resetAllDue(): Promise<void> {
+  const db = await getDB()
+  const all = await db.getAll('flashcards') as unknown as Flashcard[]
+  for (const card of all) {
+    await db.put('flashcards', { ...card, due: true, nextReview: new Date().toISOString() })
+  }
 }

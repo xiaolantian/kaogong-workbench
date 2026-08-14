@@ -1,91 +1,51 @@
 import { create } from 'zustand'
-import { WindowState, DesktopIcon, ModuleId } from '../types'
-
-const initialWindows: WindowState[] = []
+import {
+  Hourglass, Sun, Clock, Bug,
+  Puzzle, Brain, BookOpen,
+  Map, Compass, Star, Target, Book,
+  Globe, Newspaper, Signal,
+  Award, Medal, BadgeCheck, Trophy,
+  Palette, Radio, FileText, BookHeart,
+  IceCreamCone, Cookie, Lollipop, CakeSlice, CupSoda, ShoppingBag,
+  Sparkles, StarHalf, Gem,
+  Sunrise, Leaf, Sprout, Flower2, CloudSun, Wheat,
+  Fish, Bird, Rabbit, Cat, Dog,
+  Gamepad2, Dice5, Rocket, Bomb, Megaphone, Gift,
+  Wand2, Flame, Moon,
+} from 'lucide-react'
+import type { DesktopIcon, ModuleId, IconPack } from '../types'
 
 const initialIcons: DesktopIcon[] = [
-  { id: 'timer', name: '专注时刻', x: 40, y: 40 },
-  { id: 'flashcards', name: '知识卡卡', x: 40, y: 160 },
-  { id: 'planner', name: '今日计划', x: 40, y: 280 },
-  { id: 'quiz', name: '题题大作战', x: 40, y: 400 },
-  { id: 'news', name: '新闻早报', x: 40, y: 520 },
+  { id: 'timer', name: '专注时刻', icon: Hourglass },
+  { id: 'flashcards', name: '知识卡卡', icon: Puzzle },
+  { id: 'planner', name: '今日计划', icon: Map },
+  { id: 'quiz', name: '题题大作战', icon: Target },
+  { id: 'news', name: '新闻早报', icon: Newspaper },
+  { id: 'store', name: '积分商城', icon: Award },
 ]
 
+export const ICON_PACKS: Record<IconPack, Record<ModuleId, React.ComponentType<any>>> = {
+  default:    { timer: Hourglass, flashcards: Puzzle, planner: Map, quiz: Target, news: Newspaper, store: Award },
+  rainbow:    { timer: Sun, flashcards: Globe, planner: Star, quiz: Palette, news: Radio, store: Medal },
+  minimal:    { timer: Clock, flashcards: Brain, planner: Compass, quiz: Book, news: FileText, store: BadgeCheck },
+  animal:     { timer: Bug, flashcards: BookOpen, planner: Book, quiz: BookHeart, news: Signal, store: Trophy },
+  candy:      { timer: IceCreamCone, flashcards: Cookie, planner: Lollipop, quiz: CakeSlice, news: CupSoda, store: ShoppingBag },
+  starry:     { timer: Star, flashcards: Sparkles, planner: StarHalf, quiz: Compass, news: Radio, store: Gem },
+  botanical:  { timer: Sunrise, flashcards: Leaf, planner: Sprout, quiz: Flower2, news: CloudSun, store: Wheat },
+  paws:       { timer: Fish, flashcards: Bird, planner: Rabbit, quiz: Bug, news: Cat, store: Dog },
+  playful:    { timer: Gamepad2, flashcards: Dice5, planner: Rocket, quiz: Bomb, news: Megaphone, store: Gift },
+  magic:      { timer: Wand2, flashcards: Sparkles, planner: Flame, quiz: Moon, news: Sun, store: Gem },
+}
+
 interface DesktopStore {
-  windows: WindowState[]
-  activeWindowId: string | null
+  activeModuleId: ModuleId
   icons: DesktopIcon[]
-  nextZIndex: number
-  openWindow: (moduleId: ModuleId) => void
-  closeWindow: (id: string) => void
-  focusWindow: (id: string) => void
-  moveWindow: (id: string, x: number, y: number) => void
-  minimizeWindow: (id: string) => void
-  updateIcons: (icons: DesktopIcon[]) => void
+  setActiveModule: (id: ModuleId) => void
 }
 
-const windowConfig: Record<ModuleId, { title: string; w: number; h: number }> = {
-  timer: { title: '专注时刻', w: 560, h: 480 },
-  flashcards: { title: '知识卡卡', w: 600, h: 440 },
-  planner: { title: '今日计划', w: 700, h: 500 },
-  quiz: { title: '题题大作战', w: 640, h: 520 },
-  news: { title: '新闻早报', w: 560, h: 480 },
-}
-
-export const useDesktopStore = create<DesktopStore>((set, get) => ({
-  windows: initialWindows,
-  activeWindowId: null,
+export const useDesktopStore = create<DesktopStore>((set) => ({
+  activeModuleId: 'timer',
   icons: initialIcons,
-  nextZIndex: 100,
 
-  openWindow: (moduleId) => {
-    const existing = get().windows.find(w => w.moduleId === moduleId && !w.minimized)
-    if (existing) {
-      set(state => ({ activeWindowId: existing.id }))
-      return
-    }
-    const cfg = windowConfig[moduleId]
-    const offset = get().windows.length * 30
-    const id = `${moduleId}-${Date.now()}`
-    const win: WindowState = {
-      id,
-      moduleId,
-      title: cfg.title,
-      x: 120 + offset,
-      y: 80 + offset,
-      width: cfg.w,
-      height: cfg.h,
-      zIndex: get().nextZIndex,
-      minimized: false,
-    }
-    set(state => ({
-      windows: [...state.windows, win],
-      activeWindowId: id,
-      nextZIndex: state.nextZIndex + 1,
-    }))
-  },
-
-  closeWindow: (id) => set(state => ({
-    windows: state.windows.filter(w => w.id !== id),
-    activeWindowId: state.activeWindowId === id ? null : state.activeWindowId,
-  })),
-
-  focusWindow: (id) => set(state => ({
-    activeWindowId: id,
-    windows: state.windows.map(w =>
-      w.id === id ? { ...w, zIndex: state.nextZIndex, minimized: false } : w
-    ),
-    nextZIndex: state.nextZIndex + 1,
-  })),
-
-  moveWindow: (id, x, y) => set(state => ({
-    windows: state.windows.map(w => w.id === id ? { ...w, x, y } : w)
-  })),
-
-  minimizeWindow: (id) => set(state => ({
-    windows: state.windows.map(w => w.id === id ? { ...w, minimized: true } : w),
-    activeWindowId: null,
-  })),
-
-  updateIcons: (icons) => set({ icons }),
+  setActiveModule: (id) => set({ activeModuleId: id }),
 }))
